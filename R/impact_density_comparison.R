@@ -23,11 +23,6 @@ values(fallow_deer_median) <- range01(values(fallow_deer_median))
 muntjac_median <- rast("model-output/predRasterMedian_Muntiacus_reevesi_E24_R161.5_0.5_S4.9_0.1.tif")
 values(muntjac_median) <- range01(values(muntjac_median))
 
-roe_deer_proj <- roe_deer_median %>% resample(., fallow_deer_median, method = 'max')
-
-plot(values(roe_deer_proj), values(fallow_deer_median))
-fit <- lm(values(roe_deer_proj) ~ values(fallow_deer_median))
-
 impacts_vect <- vect('spatial_data/DIAdataall.shp') %>% 
       as.data.frame(.) %>% 
       # filter(Act_score >= 3) %>% 
@@ -63,6 +58,7 @@ fallow_df <- data.frame("Impact_sco" = impacts_vect$Impact_sco, "median_rel_abun
 muntjac_df <- data.frame("Impact_sco" = impacts_vect$Impact_sco, "median_rel_abund" = impacts_vect$muntjac,
                          "x" = crds(impacts_vect)[, 1], "y" = crds(impacts_vect)[, 2]) %>% drop_na()
 
+# Simple INLA models
 model_roe_deer_gauss <- inla(Impact_sco ~ median_rel_abund, data = roe_df,
                              control.compute = list(cpo = TRUE),
                              control.predictor=list(compute=TRUE))
@@ -76,27 +72,7 @@ model_muntjac_gauss <- inla(Impact_sco ~ median_rel_abund, data = muntjac_df,
                             control.compute = list(cpo = TRUE),
                             control.predictor=list(compute=TRUE))
 
-brinla::bri.lmresid.plot(model_roe_deer_gauss) 
-qqplot(qunif(ppoints(length(model_roe_deer_gauss$cpo$pit))),
-       model_roe_deer_gauss$cpo$pit, main = "Q-Q plot for Unif(0,1)", xlab = "Theoretical Quantiles", ylab = "Sample Quantiles")
-qqline(model_roe_deer_gauss$cpo$pit, distribution = function(p) qunif(p), prob = c(0.1, 0.9))
-
-brinla::bri.lmresid.plot(model_red_deer_gauss) 
-qqplot(qunif(ppoints(length(model_red_deer_gauss$cpo$pit))),
-       model_red_deer_gauss$cpo$pit, main = "Q-Q plot for Unif(0,1)", xlab = "Theoretical Quantiles", ylab = "Sample Quantiles")
-qqline(model_red_deer_gauss$cpo$pit, distribution = function(p) qunif(p), prob = c(0.1, 0.9))
-
-brinla::bri.lmresid.plot(model_fallow_deer_gauss) 
-qqplot(qunif(ppoints(length(model_fallow_deer_gauss$cpo$pit))),
-       model_fallow_deer_gauss$cpo$pit, main = "Q-Q plot for Unif(0,1)", xlab = "Theoretical Quantiles", ylab = "Sample Quantiles")
-qqline(model_fallow_deer_gauss$cpo$pit, distribution = function(p) qunif(p), prob = c(0.1, 0.9))
-
-brinla::bri.lmresid.plot(model_muntjac_gauss) 
-qqplot(qunif(ppoints(length(model_muntjac_gauss$cpo$pit))),
-       model_muntjac_gauss$cpo$pit, main = "Q-Q plot for Unif(0,1)", xlab = "Theoretical Quantiles", ylab = "Sample Quantiles")
-qqline(model_muntjac_gauss$cpo$pit, distribution = function(p) qunif(p), prob = c(0.1, 0.9))
-
-# Model with spatial random effect in inlabru
+# Models with spatial random effect in inlabru
 # Make the meshes and spde
 max.edge = 25
 region.bdry <- inla.sp2segment(ROI_rgdal)
@@ -163,8 +139,6 @@ red_bru$summary.fixed
 fallow_bru$summary.fixed
 muntjac_bru$summary.fixed
 
-
-
 # Model comparison
 hist(roe_bru$cpo$pit)
 hist(model_roe_deer_gauss$cpo$pit)
@@ -218,7 +192,6 @@ roe_preds <- predict(roe_bru,
                       data = data.frame(median_rel_abund = seq(0,1, length = 1000)), 
                       formula = Impact_sco ~ median_rel_abund + Intercept + myfield,
                       n.samples = 1000)
-
 red_preds <- predict(red_bru, 
                      data = data.frame(median_rel_abund = seq(min(red_df$median_rel_abund, na.rm = T), max(red_df$median_rel_abund, na.rm = T), length = 100)), 
                      formula = Impact_sco ~ median_rel_abund + Intercept,
