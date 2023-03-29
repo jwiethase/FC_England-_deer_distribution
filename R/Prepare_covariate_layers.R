@@ -198,40 +198,6 @@ final_df <- prepareSplineData(final_df, final_df$night_time_light_log, method = 
 final_df <- prepareSplineData(final_df, final_df$night_time_light, method = "gmm", nsplines = 2)
 final_df <- prepareSplineData(final_df, final_df$residential_population_log, method = "quantile", nsplines = 2, user_cp_quantiles = c(0.01, 0.105))
 
-test_df <- final_df[, grep("sortBase", colnames(final_df))]
-
-df <- test_df
-
-while(TRUE) {
-      # Calculate VIF
-      vif_result <- vif(df)
-      
-      # Find the maximum VIF value and the corresponding variable
-      max_vif <- max(vif_result$VIF)
-      max_vif_var <- vif_result$Variables[which.max(vif_result$VIF)]
-      
-      # Check if the maximum VIF is below the threshold (10)
-      if (max_vif < 10) {
-            break
-      }
-      
-      # Remove the variable with the highest VIF
-      df <- df[ , !(colnames(df) %in% max_vif_var)]
-}
-
-# The resulting dataframe (df) contains only the variables with VIF < 10
-print(df)
-
-usdm::vif(df)
-
-test_df_2 <- test_df %>% 
-      dplyr::select(elevation_1.sortBase, elevation_2.sortBase,
-                    linear_woody_features_1.sortBase, linear_woody_features_2.sortBase,
-                    grassland_log_1.sortBase, grassland_log_2.sortBase,
-                    tree_cover_density_log_1.sortBase, tree_cover_density_log_2.sortBase,
-                    builtup_log_1.sortBase, builtup_log_2.sortBase,
-                    night_time_light_log_1.sortBase, night_time_light_log_2.sortBase)
-usdm::vif(test_df_2)
 # Combine the unscaled prediction vectors
 rm(all.seq)
 all.seq <- mget(ls(pattern = "*.seq"))
