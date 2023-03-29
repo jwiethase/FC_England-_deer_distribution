@@ -3,10 +3,6 @@ R scripts to estimate the distribution of the four most common deer species in E
 This work was funded by the Forestry Commission, project FEE/1086.
 
 ## Table of Contents
-- Prepare_observation_data.R: This script takes raw observation data, and produces  
-
-## Table of Contents
-Visualize_raw_data.R
 | Script Name      | Description |
 | ---------------- | ----------- |
 | [Prepare_observation_data.R](R/Prepare_observation_data.R) | Preprocessing and cleaning of observation data |
@@ -16,3 +12,5 @@ Visualize_raw_data.R
 | [Run_INLA_model.R](R/Run_INLA_model.R) | Apply the INLA model using the 'pointedSDMs' package, export results |
 | [Get_INLA_results.R](R/Get_INLA_results.R) | Iterate through INLA model outputs and produce results plots |
 | [impact_density_comparison.R](R/impact_density_comparison.R) | Analyse the deer density-impact relationship |
+| [Folder: England_deer_shiny](England_deer_shiny) | Create a Shiny app to explore model outputs |
+
