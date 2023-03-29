@@ -1,6 +1,5 @@
 # Analysing deer distribution and abundance in England
 R scripts to estimate the distribution of the four most common deer species in England, namely roe deer, Reeve's muntjac, fallow deer and red deer. This analysis is applying species distribution models with data integration and spline regression in INLA, using the R package 'pointedSDMs'.
-This work was funded by the Forestry Commission, project FEE/1086.
 
 ## Table of Contents
 | Script Name      | Description |
@@ -14,3 +13,5 @@ This work was funded by the Forestry Commission, project FEE/1086.
 | [impact_density_comparison.R](R/impact_density_comparison.R) | Analyse the deer density-impact relationship |
 | [Folder: England_deer_shiny](England_deer_shiny) | Create a Shiny app to explore model outputs |
 
+## Acknowledgements
+This work was funded by the Forestry Commission (project FEE/1086). We would like to thank the organisations and individuals that kindly provided us with data for the development of the models. Deer vehicle collision data and helpful insights came from Dr Jochen Langbein, with additional data from National Highways. Deer count data from the Breeding Bird Survey were used by permission of the BTO. The BTO/JNCC/RSPB Breeding Bird Survey is a partnership jointly funded by the BTO, JNCC and RSPB, with fieldwork conducted by volunteers. Culling data were provided by Forestry England, and Woodland Impact Survey data came from the records of the Deer Initiative. Gamebag data came from the GWCT’s National Gamebag Census.
