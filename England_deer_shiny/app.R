@@ -6,8 +6,6 @@ for (pkg in required_packages) {
       library(pkg, character.only = TRUE)
 }
 
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-
 source(file.path('source', 'functions.R'))
 
 shinyApp(ui=fluidPage(
@@ -112,16 +110,16 @@ shinyApp(ui=fluidPage(
                         proxy %>%
                               clearGroup("raster")
                         if(input$raster_layer == "Roe deer"){
-                              raster_path <- file.path("rasters", "Capreolus_capreolus_rast.tif")
+                              raster_path <- "Capreolus_capreolus_rast.tif"
                         }
                         if(input$raster_layer == "Red deer"){
-                              raster_path <- file.path("rasters", "Cervus_elaphus_rast.tif")
+                              raster_path <- "Cervus_elaphus_rast.tif"
                         }
                         if(input$raster_layer == "Fallow deer"){
-                              raster_path <- file.path("rasters", "Dama_dama_rast.tif")
+                              raster_path <- "Dama_dama_rast.tif"
                         }
                         if(input$raster_layer == "Muntjac"){
-                              raster_path <- file.path("rasters", "Muntiacus_reevesi_rast.tif")
+                              raster_path <- "Muntiacus_reevesi_rast.tif"
                         }
                         r <- raster(raster_path)
                         domain_values <- c(min(values(r), na.rm = T), max(values(r), na.rm = T))
@@ -150,16 +148,16 @@ shinyApp(ui=fluidPage(
                         proxy %>%
                               clearGroup("raster")
                         if(input$raster_layer == "Roe deer"){
-                              raster_path <- file.path("rasters", "Capreolus_capreolus_sd.tif")
+                              raster_path <- "Capreolus_capreolus_sd.tif"
                         }
                         if(input$raster_layer == "Red deer"){
-                              raster_path <- file.path("rasters", "Cervus_elaphus_sd.tif")
+                              raster_path <- "Cervus_elaphus_sd.tif"
                         }
                         if(input$raster_layer == "Fallow deer"){
-                              raster_path <- file.path("rasters", "Dama_dama_sd.tif")
+                              raster_path <- "Dama_dama_sd.tif"
                         }
                         if(input$raster_layer == "Muntjac"){
-                              raster_path <- file.path("rasters", "Muntiacus_reevesi_sd.tif")
+                              raster_path <- "Muntiacus_reevesi_sd.tif"
                         }
                         r <- raster(raster_path)
                         domain_values <- c(min(values(r), na.rm = T), max(values(r), na.rm = T))
