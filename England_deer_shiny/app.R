@@ -6,7 +6,7 @@ for (pkg in required_packages) {
       library(pkg, character.only = TRUE)
 }
 
-source(file.path('source', 'functions.R'))
+source('functions.R')
 
 shinyApp(ui=fluidPage(
       shinyjs::useShinyjs(), 
