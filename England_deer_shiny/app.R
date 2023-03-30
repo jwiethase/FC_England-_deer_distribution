@@ -235,7 +235,7 @@ shinyApp(ui=fluidPage(
                         title = "More information",
                         p("Explore the relative abundance of the four most common deer species 
                         in England: Roe deer, Red deer, Fallow deer, and Muntjac.",
-                          tags$br(), "
+                          tags$br(), "This application was developed by Joris Wiethase, Department of Biology, University of York.
                           Relative abundance estimates are derived from 
                         an integrated INLA Species Distribution Model built using the package 'PointedSDMS' in R (Mostert et al. 2022, see also https://github.com/PhilipMostert/PointedSDMs). 
                          On the relative abundance score, 0 reflects absence of the species, and values closer to 1 represent areas where the species is more abundant. You can choose the deer species and raster option 
